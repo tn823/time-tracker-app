@@ -21,4 +21,35 @@
   /* khoảng cách giữa 2 nút */
   gap: 20px;
   justify-content: center;
+  margin-bottom: 50px;
+}
+
+.byme{
+  font-weight: bold;
+  font-size: 18px;
+  color: #ff0000;
+  animation: colorChange 3s infinite;
+  text-decoration: none;
+}
+
+@keyframes colorChange {
+  0% {
+    color: #ff0000;
+  }
+
+  25% {
+    color: #00ff00;
+  }
+
+  50% {
+    color: #0000ff;
+  }
+
+  75% {
+    color: #ff00ff;
+  }
+
+  100% {
+    color: #ff0000;
+  }
 }

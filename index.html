@@ -4,9 +4,35 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="src/assets/tn823.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>tn823</title>
+    <title>TimeTracker</title>
+    <style>
+      /* Video nền */
+      .background-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        /* Đặt phía sau nội dung */
+        overflow: hidden;
+      }
+    
+      .background-video iframe {
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        /* Tắt sự kiện chuột trên video */
+      }
+    </style>
   </head>
   <body>
+    <!-- Video nền -->
+    <div class="background-video">
+      <!-- <iframe
+        src="https://motionbgs.com/media/760/vending-coke-machines.960x540.mp4"
+        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

@@ -57,6 +57,9 @@ function App() {
           </button>
           <button onClick={handleReset}>Reset</button>
         </div>
+        <a href='https://github.com/tn823' className='byme' target='_blank' rel="noopener noreferrer">
+          Design By: tn823
+        </a>
       </div>
     </div>
   )
