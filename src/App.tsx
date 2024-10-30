@@ -1,34 +1,64 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [isRungning, setIsRunning] = useState(false);
+  const [time, setTime] = useState(0)
+
+  useEffect(() => {
+    const startTime = localStorage.getItem('startTime')
+    const savedIsRunning = localStorage.getItem('isRunning') === 'true'
+
+    if (startTime && savedIsRunning) {
+      const elapsedTime = Math.floor((Date.now() - parseInt(startTime)) / 1000)
+      setTime(elapsedTime)
+      setIsRunning(true)
+    }
+  }, [])
+
+  const handleStartAndStop = () => {
+    setIsRunning(!isRungning)
+  }
+
+  const handleReset = () => {
+    setIsRunning(false)
+    setTime(0)
+  }
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout | undefined
+    if (isRungning) {
+      timer = setInterval(() => {
+        setTime((prevTime) => prevTime + 1)
+      }, 1000)
+    } else if (!isRungning && time !== 0) {
+      clearInterval(timer)
+    }
+    return () => clearInterval(timer)
+  }, [isRungning])
+
+  const formatTime = (time: number) => {
+    const getSeconds = `0${time % 60}`.slice(-2)
+    const minutes = Math.floor(time / 60)
+    const getMinutes = `0${minutes % 60}`.slice(-2)
+    const getHours = `0${Math.floor(time / 3600)}`.slice(-2)
+    return `${getHours} : ${getMinutes} : ${getSeconds} `
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className='app'>
+      <div className='font'>
+        <h1>THE TIME YOU SPEND WORKING</h1>
+        <div className='time-display'>{formatTime(time)}</div>
+        <div className='buttons'>
+          <button onClick={handleStartAndStop}>
+            {isRungning ? 'Stop' : 'Start'}
+          </button>
+          <button onClick={handleReset}>Reset</button>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
